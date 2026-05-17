@@ -4,6 +4,18 @@ Case técnico de Engenharia e Análise de Dados com pipeline medalhão (Bronze �
 
 ---
 
+## 📋 Índice
+
+1. [Visão Geral](#-visão-geral)
+2. [Arquitetura](#️-arquitetura)
+3. [Estrutura do Projeto](#-estrutura-do-projeto)
+4. [Como Rodar](#-como-rodar)
+5. [Regras de Qualidade](#-regras-de-qualidade)
+6. [Stack](#️-stack)
+7. [Documentação Técnica](#-documentação-técnica)
+
+---
+
 ## 📊 Visão Geral
 
 O projeto processa **6.000 contratos financeiros** ao longo de 2025, aplicando regras de qualidade de dados, análises de negócio e gerando um dashboard HTML completo — tudo a partir de um único comando.
