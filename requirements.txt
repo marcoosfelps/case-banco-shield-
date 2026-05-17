@@ -1,0 +1,5 @@
+pandas==2.2.3
+duckdb==1.2.2
+pyarrow==19.0.1
+matplotlib==3.9.4
+jupyter==1.1.1

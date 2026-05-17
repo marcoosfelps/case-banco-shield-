@@ -1,0 +1,74 @@
+{
+  "dim_banco": {
+    "cast": {
+      "bank_id": "int64",
+      "bank_name": "string"
+    },
+    "required_fields": ["bank_id", "bank_name"],
+    "unique_fields": ["bank_id", "bank_name"]
+  },
+  "dim_produto": {
+    "cast": {
+      "product_id": "int64",
+      "product_name": "string",
+      "category": "string",
+      "tenor_months": "int64",
+      "base_rate_apr": "float64"
+    },
+    "normalize_text": ["product_name", "category"],
+    "required_fields": ["product_id", "product_name", "category", "tenor_months", "base_rate_apr"],
+    "unique_fields": ["product_id"],
+    "domain_rules": {
+      "tenor_months": { "type": "range", "min": 1, "max": 360 },
+      "base_rate_apr": { "type": "range", "min": 0, "max": 1 }
+    }
+  },
+  "dim_localidade": {
+    "cast": {
+      "location_id": "int64",
+      "location_name": "string",
+      "macro_region": "string",
+      "risk_factor_region": "float64"
+    },
+    "normalize_text": ["location_name", "macro_region"],
+    "required_fields": ["location_id", "location_name", "macro_region", "risk_factor_region"],
+    "unique_fields": ["location_id"],
+    "domain_rules": {
+      "risk_factor_region": { "type": "range", "min": 0, "max": 10 }
+    }
+  },
+  "fato_contratos": {
+    "cast": {
+      "product_id": "int64",
+      "location_id": "int64",
+      "units": "int64",
+      "dpd": "int64",
+      "financed_amount": "float64",
+      "outstanding_balance": "float64",
+      "delinquent_amount_30p": "float64",
+      "risk_score": "float64",
+      "ano_mes": "Int64"
+    },
+    "normalize_text": ["bank"],
+    "required_fields": ["contract_id", "bank", "ano_mes", "product_id", "location_id"],
+    "unique_fields": ["contract_id"],
+    "foreign_keys": {
+      "product_id": "dim_produto",
+      "location_id": "dim_localidade",
+      "bank": "dim_banco"
+    },
+    "domain_rules": {
+      "bank": { "type": "enum", "values": ["Banco Shield", "Hidra"] },
+      "ano_mes": { "type": "range", "min": 202501, "max": 202512 },
+      "risk_score": { "type": "range", "min": 0, "max": 1 }
+    },
+    "non_negative_fields": ["financed_amount", "outstanding_balance"],
+    "cross_field_rules": [
+      {
+        "flag": "_err_delinquent_30p",
+        "condition": "(dpd < 30) & (delinquent_amount_30p > 0)"
+      }
+    ]
+  }
+}
+

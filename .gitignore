@@ -1,0 +1,20 @@
+# Gerados pelo pipeline
+data/gold/
+data/pipeline.duckdb
+dashboard/index.html
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
